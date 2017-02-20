@@ -11,8 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     TextView _latitude, _longitude;
-    ProgressBar _progressBar;
+//    ProgressBar _progressBar;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements
 
         _latitude = (TextView) findViewById(R.id.latitude);
         _longitude = (TextView) findViewById(R.id.longitude);
-        _progressBar = (ProgressBar) findViewById(R.id.progressBar);
+  //      _progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -74,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
 
+        Toast.makeText(this, "Location Changed", Toast.LENGTH_LONG).show();
         mLastLocation = location;
-        _progressBar.setVisibility(View.INVISIBLE);
+//        _progressBar.setVisibility(View.INVISIBLE);
         _latitude.setText("Latitude: " + String.valueOf(mLastLocation.getLatitude()));
         _longitude.setText("Longitude: " + String.valueOf(mLastLocation.getLongitude()));
 
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements
                     mGoogleApiClient);
 
             if (mLastLocation != null) {
-                _progressBar.setVisibility(View.INVISIBLE);
+  //              _progressBar.setVisibility(View.INVISIBLE);
                 _latitude.setText("Latitude: " + String.valueOf(mLastLocation.getLatitude()));
                 _longitude.setText("Longitude: " + String.valueOf(mLastLocation.getLongitude()));
             } else {
@@ -190,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements
         if (requestCode == MY_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "permission granted", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                finish();
             } else {
                 Toast.makeText(this, "didnt get permission", Toast.LENGTH_LONG).show();
             }
